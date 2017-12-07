@@ -1,8 +1,11 @@
 class Game
   def initialize
-    puts "Starting a new game!"
     @dict = load_dict
     @word = @dict.sample
+    @turns = 0
+    @guesses = []
+
+    puts "Starting a new game!"
     puts "The dictionary has chosen a word."
     puts "#{@word}"
   end
@@ -18,10 +21,14 @@ class Game
     words
   end
 
-  def display_word
+  def display_word_with_guesses(word, guesses)
+    # For each letter in the word, either display a _ or a letter depending on whether the letter is in guesses
+
+    # For letters in guesses but not word, display those after
   end
 
-  def display_turn_count(turn)
+  def display_turn_count(word, turns)
+    puts "You have taken #{turns} turns. You have #{20 - turns} guesses left to make."
   end
 
 end
