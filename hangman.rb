@@ -49,14 +49,10 @@ class Game
 
   def valid_guess?(letter_guess)
     # Validate that the guess is a single alpha character before input
-    if letter_guess.length == 1 && !letter_guess.match(/[^A-Za-z]/) && !@guesses.include?(letter_guess)
-      true
-    else
-      false
-    end
+    (letter_guess.length == 1 && !letter_guess.match(/[^A-Za-z]/) && !@guesses.include?(letter_guess)) ? true : false
   end
 
-  def make_guess(word, letter_guess)
+  def make_guess(word, letter_guess) # WIP
     # Refactor q: What about if person has already made this guess?
     @guesses << letter_guess
 
