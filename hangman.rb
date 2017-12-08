@@ -47,8 +47,8 @@ class Game
     puts "You have taken #{turns} turns. You have #{20 - turns} guesses left to make."
   end
 
+  # Validate that the guess is a single alpha character that has not yet been guessed
   def valid_guess?(letter_guess)
-    # Validate that the guess is a single alpha character before input
     (letter_guess.length == 1 && !letter_guess.match(/[^A-Za-z]/) && !@guesses.include?(letter_guess)) ? true : false
   end
 
@@ -70,6 +70,13 @@ class Game
     display_word_and_incorrect_guesses
     # Prompt user for input
     puts "Please make a guess"
+    # Validate guess
+    valid = nil
+    until valid
+      puts "Please enter a single alphabetical character as your guess. Do not repeat guesses."
+      letter_guess = gets.chomp
+      valid = valid_guess?(letter_guess)
+    end
     # Run make_guess method
     # End turn?
   end
