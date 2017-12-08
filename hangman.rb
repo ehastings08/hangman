@@ -21,15 +21,24 @@ class Game
     words
   end
 
-  def display_word_with_guesses(word, guesses)
+  def get_display_word(word, guesses)
     # For each letter in the word, either display a "_ " or a letter depending on whether the letter is in guesses
     word_display = ""
     word.split("").each do |letter|
       guesses.include?(letter) ? word_display += "#{letter} " : word_display += "_ "
     end
     word_display
+  end
 
-    # For letters in guesses but not word, display those after
+  def get_display_incorrect_guesses(word, guesses)
+    # For letters in guesses but not word, display those after as a string separated with spaces
+    incorrect_guesses = guesses - word.split("")
+    display_incorrect_guesses = incorrect_guesses.join(" ")
+  end
+
+  def display_word_and_incorrect_guesses(word, guesses)
+    puts "Guessed word so far: #{get_display_word(word, guesses)}"
+    puts "Your incorrect guesses so far: #{get_display_incorrect_guesses(word, guesses)}"
   end
 
   def display_turn_count(word, turns)
