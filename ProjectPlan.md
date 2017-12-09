@@ -13,16 +13,20 @@
 ## Display incorrect guesses - Complete
 - ...and which incorrect letters have already been chosen.
 
-## Update display method
+## Update display method - Complete
 - Takes a guess letter and reflects whether the letter was correct or incorrect.
 
-## Run turns
+## Run turns - Complete
 - Every turn, allow the player to make a guess of a letter. It should be case insensitive.
 - Update the display to reflect whether the letter was correct or incorrect.
 
-## Game over?
+## Game over? - Complete
 - If out of guesses, the player should lose.
 - If they guess the word, the player should win
+
+## Make guesses case insensitive - Complete
+- Convert words in dictionary to lowercase? Or ignore those with capital letters?
+- When someone makes a guess, convert their guess to lower alphabetical
 
 
 # Serialization

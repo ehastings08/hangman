@@ -1,18 +1,7 @@
 require 'json'
 
 class Game
-
   def initialize
-    puts "Welcome to Hangman! Would you like to start a new game or load an old game? For a new game, type 'n'. For an old game, type 'o'."
-    answer = nil
-    until answer == 'n' || answer == 'o'
-      puts "Please select a new game (n) or an old game (o)."
-      answer = gets.chomp
-    end
-    answer == 'n' ? start_new_game : continue_saved_game
-  end
-
-  def start_new_game
     @dict = load_dict
     @word = @dict.sample
     @turns = 0
@@ -21,25 +10,8 @@ class Game
 
     puts "Starting a new game!"
     puts "The dictionary has chosen a word."
-    # puts "#{@word}" # For debugging only
-
-    run_game
-  end
-
-  # WIP
-  def continue_saved_game
-    #{ }Continue saved game! Go to load game method. Then run the game.
-
-    exists = nil
-    until exists
-      puts "Please enter the name of an old game."
-      filename = gets.chomp
-      exists = File.exist?("#{filename}.json")
-    end
-    load_game("#{filename}.json")
-  end
-
-  def run_game
+    puts "#{@word}"
+    # WIP - start with one turn, then add loop
     until game_over?(@word)
       start_turn
     end
@@ -100,7 +72,7 @@ class Game
   end
 
   def turn_or_save_choice
-    puts "\nWould you like to save the game or take your turn? To save, type 's'. To take a turn, type 't'."
+    puts "Would you like to save the game or take your turn? To save, type 's'. To take a turn, type 't'."
     choice = gets.chomp
     until choice == 's' || choice == 't'
       puts "Please select save (s) or take turn (t)."
@@ -138,43 +110,29 @@ class Game
     make_guess(@word, letter_guess)
     # Display the word now
     display_word_and_incorrect_guesses(@word)
-    # Increment turn
-    @turns += 1
+    # End turn?
   end
 
   # Define a to_json method to serialize the class to a JSON string
   def to_json(*a)
     {
-      "word" => @word,
-      "turns" => @turns,
-      "guesses" => @guesses,
-      "total_guesses_allowed" => @total_guesses_allowed
+      "json_class" => self.class.name,
+      "data" => {
+        "word" => @word,
+        "turns" => @turns,
+        "guesses" => @guesses
+        "total_guesses_allowed" => @total_guesses_allowed
+      }
     }.to_json(*a)
   end
 
-  def json_create(obj)
-    @word = obj["word"]
-    @turns = obj["turns"]
-    @guesses = obj["guesses"]
-    @total_guesses_allowed = obj["total_guesses_allowed"]
-    run_game
+  def self.json_create(o)
+    new(o["data"]["word"], o["data"]["turns"], o["data"]["guesses"], o["data"]["total_guesses_allowed"])
   end
 
+  # WIP
   def save_game
-    json_string = self.to_json
-
-    puts "Please label this game so you can access it later."
-    name = gets.chomp
-    File.open("#{name}.json", "w") do |f|
-      f.write(json_string)
-    end
-    puts "Save complete! Exiting game."
-    exit
-  end
-
-  def load_game(filename)
-    json_string = File.read(filename)
-    json_create(JSON.parse(json_string))
+    puts "To complete: save the game"
   end
 
   def game_over?(word)
