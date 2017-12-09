@@ -9,7 +9,6 @@ class Game
     puts "Starting a new game!"
     puts "The dictionary has chosen a word."
     puts "#{@word}"
-
     # WIP - start with one turn, then add loop
     until game_over?(@word)
       take_turn
@@ -23,7 +22,7 @@ class Game
     words = []
     File.open("dict.txt").each do |line| # Hard code for now
       if line.length.between?(5, 12)
-        words << line
+        words << line.rstrip
       end
     end
     words
