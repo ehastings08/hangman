@@ -24,8 +24,9 @@
 - If out of guesses, the player should lose.
 - If they guess the word, the player should win
 
-## Make guesses case insensitive
-
+## Make guesses case insensitive - Complete
+- Convert words in dictionary to lowercase? Or ignore those with capital letters?
+- When someone makes a guess, convert their guess to lower alphabetical
 
 
 # Serialization

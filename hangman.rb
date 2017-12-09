@@ -11,7 +11,7 @@ class Game
     puts "#{@word}"
     # WIP - start with one turn, then add loop
     until game_over?(@word)
-      take_turn
+      start_turn
     end
 
     puts won_game?(@word) ? "You won!" : "Sorry, try again"
@@ -22,7 +22,7 @@ class Game
     words = []
     File.open("dict.txt").each do |line| # Hard code for now
       if line.length.between?(5, 12)
-        words << line.rstrip
+        words << line.rstrip.downcase
       end
     end
     words
@@ -69,6 +69,27 @@ class Game
     end
   end
 
+  def turn_or_save_choice
+    puts "Would you like to save the game or take your turn? To save, type 's'. To take a turn, type 't'."
+    choice = gets.chomp
+    until choice == 's' || choice == 't'
+      puts "Please select save (s) or take turn (t)."
+      choice = gets.chomp
+    end
+
+    choice
+  end
+
+  def start_turn
+    # Provide player option to save game
+    choice = turn_or_save_choice
+    if choice == 't'
+      take_turn
+    else
+      save_game
+    end
+  end
+
   def take_turn
     # Display turn count
     display_turn_count
@@ -88,6 +109,11 @@ class Game
     # Display the word now
     display_word_and_incorrect_guesses(@word)
     # End turn?
+  end
+
+  # WIP
+  def save_game
+    puts "To complete: save the game"
   end
 
   def game_over?(word)
