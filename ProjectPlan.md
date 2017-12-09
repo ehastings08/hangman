@@ -13,16 +13,19 @@
 ## Display incorrect guesses - Complete
 - ...and which incorrect letters have already been chosen.
 
-## Update display method
+## Update display method - Complete
 - Takes a guess letter and reflects whether the letter was correct or incorrect.
 
-## Run turns
+## Run turns - Complete
 - Every turn, allow the player to make a guess of a letter. It should be case insensitive.
 - Update the display to reflect whether the letter was correct or incorrect.
 
-## Game over?
+## Game over? - Complete
 - If out of guesses, the player should lose.
 - If they guess the word, the player should win
+
+## Make guesses case insensitive
+
 
 
 # Serialization
@@ -32,3 +35,31 @@
 
 ## Open option
 - When the program first loads, add in an option that allows you to open one of your saved games, which should jump you exactly back to where you were when you saved. Play on!
+
+
+
+## References
+
+### JSON
+
+- https://www.skorks.com/2010/04/serializing-and-deserializing-objects-with-ruby/
+
+Serialize:
+
+puts "JSON:"
+time = benchmark_serialize("/home/alan/tmp/json.dat") do |file, object|
+  file.puts object.to_json
+end
+puts "Time: #{time} sec"
+
+Deserialize:
+
+array2 = []
+puts "JSON:"
+time = benchmark_deserialize("/home/alan/tmp/json.dat", array2, "\n") do |object|
+  JSON.parse(object)
+end
+puts "Array size: #{array2.length}"
+puts "Time: #{time} sec"
+
+### PStore?
