@@ -1,6 +1,7 @@
 require 'json'
 
 class Game
+
   def initialize
     @dict = load_dict
     @word = @dict.sample
@@ -72,7 +73,7 @@ class Game
   end
 
   def turn_or_save_choice
-    puts "Would you like to save the game or take your turn? To save, type 's'. To take a turn, type 't'."
+    puts "\nWould you like to save the game or take your turn? To save, type 's'. To take a turn, type 't'."
     choice = gets.chomp
     until choice == 's' || choice == 't'
       puts "Please select save (s) or take turn (t)."
@@ -133,10 +134,22 @@ class Game
 
   # WIP
   def save_game
-    puts "To complete: save the game"
+    puts "To complete: save the game" # delete
     json_string = self.to_json
-    puts json_string
-    puts JSON.parse(json_string)
+    puts json_string # delete
+    puts JSON.parse(json_string) # delete
+
+    puts "Please label this game so you can access it later."
+    name = gets.chomp
+    File.open("#{name}.json", "w") do |f|
+      f.write(json_string)
+    end
+    puts "Save complete! Exiting game."
+    exit
+  end
+
+  # WIP
+  def load_game
   end
 
   def game_over?(word)
