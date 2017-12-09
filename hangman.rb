@@ -60,7 +60,7 @@ class Game
 
   def make_guess(word, letter_guess)
     # Refactor q: What about if person has already made this guess?
-    @guesses << letter_guess
+    @guesses << letter_guess.downcase
 
     if word.split("").include?(letter_guess)
       puts "The letter #{letter_guess} is correct!"
