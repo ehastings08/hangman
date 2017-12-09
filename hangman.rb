@@ -9,7 +9,6 @@ class Game
       puts "Please select a new game (n) or an old game (o)."
       answer = gets.chomp
     end
-
     answer == 'n' ? start_new_game : continue_saved_game
   end
 
@@ -22,14 +21,22 @@ class Game
 
     puts "Starting a new game!"
     puts "The dictionary has chosen a word."
-    puts "#{@word}"
+    # puts "#{@word}" # For debugging only
 
     run_game
   end
 
   # WIP
   def continue_saved_game
-    puts "Continue saved game! Go to load game method. Then run the game."
+    #{ }Continue saved game! Go to load game method. Then run the game.
+
+    exists = nil
+    until exists
+      puts "Please enter the name of an old game."
+      filename = gets.chomp
+      exists = File.exist?("#{filename}.json")
+    end
+    load_game("#{filename}.json")
   end
 
   def run_game
@@ -138,26 +145,23 @@ class Game
   # Define a to_json method to serialize the class to a JSON string
   def to_json(*a)
     {
-      "json_class" => self.class.name,
-      "data" => {
-        "word" => @word,
-        "turns" => @turns,
-        "guesses" => @guesses,
-        "total_guesses_allowed" => @total_guesses_allowed
-      }
+      "word" => @word,
+      "turns" => @turns,
+      "guesses" => @guesses,
+      "total_guesses_allowed" => @total_guesses_allowed
     }.to_json(*a)
   end
 
-  def self.json_create(o)
-    new(o["data"]["word"], o["data"]["turns"], o["data"]["guesses"], o["data"]["total_guesses_allowed"])
+  def json_create(obj)
+    @word = obj["word"]
+    @turns = obj["turns"]
+    @guesses = obj["guesses"]
+    @total_guesses_allowed = obj["total_guesses_allowed"]
+    run_game
   end
 
-  # WIP
   def save_game
-    puts "To complete: save the game" # delete
     json_string = self.to_json
-    puts json_string # delete
-    puts JSON.parse(json_string) # delete
 
     puts "Please label this game so you can access it later."
     name = gets.chomp
@@ -168,8 +172,9 @@ class Game
     exit
   end
 
-  # WIP
-  def load_game
+  def load_game(filename)
+    json_string = File.read(filename)
+    json_create(JSON.parse(json_string))
   end
 
   def game_over?(word)
