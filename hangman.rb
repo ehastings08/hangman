@@ -22,7 +22,7 @@ class Game
     words = []
     File.open("dict.txt").each do |line| # Hard code for now
       if line.length.between?(5, 12)
-        words << line.rstrip
+        words << line.rstrip.downcase
       end
     end
     words
