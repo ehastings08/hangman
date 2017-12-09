@@ -1,3 +1,5 @@
+require 'json'
+
 class Game
   def initialize
     @dict = load_dict
@@ -108,12 +110,33 @@ class Game
     make_guess(@word, letter_guess)
     # Display the word now
     display_word_and_incorrect_guesses(@word)
-    # End turn?
+    # Increment turn
+    @turns += 1
+  end
+
+  # Define a to_json method to serialize the class to a JSON string
+  def to_json(*a)
+    {
+      "json_class" => self.class.name,
+      "data" => {
+        "word" => @word,
+        "turns" => @turns,
+        "guesses" => @guesses,
+        "total_guesses_allowed" => @total_guesses_allowed
+      }
+    }.to_json(*a)
+  end
+
+  def self.json_create(o)
+    new(o["data"]["word"], o["data"]["turns"], o["data"]["guesses"], o["data"]["total_guesses_allowed"])
   end
 
   # WIP
   def save_game
     puts "To complete: save the game"
+    json_string = self.to_json
+    puts json_string
+    puts JSON.parse(json_string)
   end
 
   def game_over?(word)
